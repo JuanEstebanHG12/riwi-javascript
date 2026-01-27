@@ -6,6 +6,7 @@ async function getUsers() {
         return data
     } catch (error) {
         console.error(error);
+        throw error;
     }
 }
 
@@ -18,6 +19,7 @@ async function getUser(user) {
 
     } catch (error) {
         console.error(error);
+        throw error;
     }
 }
 
@@ -38,10 +40,11 @@ async function login(name, pass) {
         }
     } catch (error) {
         console.error(error);
-        
+        throw error;
     }
 }
 
 export {
     login
 }
+

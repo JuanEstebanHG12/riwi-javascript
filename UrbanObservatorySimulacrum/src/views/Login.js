@@ -1,6 +1,6 @@
 import { login } from "../services/usersServices.js"
-
-
+import { Loading } from "../components/Loading.js"
+import { render } from "../core/render.js"
 
 export function Login(){
     return ` <div class="auth-body">
@@ -24,7 +24,7 @@ export function Login(){
           <input id="password" type="password" placeholder="••••••••" required />
         </div>
 
-        <button id="btn-login" type="submit" class="btn btn-primary">
+        <button id="btn-login" class="btn btn-primary">
           Iniciar sesión
         </button>
 

@@ -1,9 +1,16 @@
 import { filterProjects, getProjects } from "../services/projectsServices.js";
 import { ListProyect } from "./ListProjects.js";
-import {render} from '../core/render.js'
-export async function Dashboard(){
+import { render } from '../core/render.js'
+import { Loadin } from "../components/Loading.js";
+let stats = null
+let status = 'all'
+export async function Dashboard(status = '') {
+    render(Loadin())
+    let listaProjects = await filterProjects(status)   
+    if (listaProjects.length === 0){
+        listaProjects = await getProjects()
+    }
     
-    let stats =  await filterProjects()
 
     return `
     <!-- Main Content -->
@@ -21,10 +28,10 @@ export async function Dashboard(){
                         </div>
                         <div class="search-filters">
                             <select class="select-input">
-                                <option value="">Todos los estados</option>
-                                <option value="activo">Activo</option>
-                                <option value="finalizado">Finalizado</option>
-                                <option value="pendiente">Pendiente</option>
+                                <option ${status == '' ? 'selected' : ""} value="">Todos los estados</option>
+                                <option ${status == 'active' ? 'selected' : ""} value="active">Activo</option>
+                                <option ${status == 'finished' ? 'selected' : ""} value="finished">Finalizado</option>
+                                <option ${status == 'pending' ? 'selected' : ""} value="pending">Pendiente</option>
                             </select>
                             <button type="button" class="filter-button">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
@@ -42,22 +49,58 @@ export async function Dashboard(){
             <div class="stats-grid">
                 <div class="stat-card green">
                     <p class="stat-label">Proyectos Activos</p>
-                    <p class="stat-value">${stats.projectsActives.amount}</p>
+                    <p class="stat-value">${listaProjects.filter(a => a.state == 'active')}</p>
                 </div>
                 <div class="stat-card yellow">
                     <p class="stat-label">En Desarrollo</p>
-                    <p class="stat-value">${stats.projectsPending.amount}</p>
+                    <p class="stat-value">${listaProjects.filter(a => a.state == 'pending')}</p>
                 </div>
                 <div class="stat-card gray">
                     <p class="stat-label">Finalizados</p>
-                    <p class="stat-value">${stats.projectsFinished.amount}</p>
+                    <p class="stat-value">${listaProjects.filter(a => a.state == 'finished')}</p>
                 </div>
             </div>
         </section>
 
         <!-- Projects Grid -->
-        ${await ListProyect()}
+        ${await ListProyect(listaProjects)}
     </main>
 
     `
 }
+
+
+
+    document.addEventListener('change', async (e) => {
+    if (e.target.classList.contains('select-input')) {
+        let status = e.target.value
+        render(await Dashboard(status))
+        
+        //filtro los proyectos por estado
+        //vuelvo a renderizar la vista con los proyectos filtrados
+        
+    }
+}) 
+
+
+
+export async function ListProyecta(listaProjects){
+    // Mostrar loading mientras se carga el clima
+    /* const loadingHtml = Loading({ message: 'Cargando datos climáticos...' }) */
+    
+    //obtener la lista en base a la lista de projectos
+    const weather = await Promise.all(
+        listaProjects.map(p => getWeather(p.longitude, p.latitude))
+    )
+    
+
+    /* en el .map() NO OLVIDAR EL join('') PARA QUE FUNCIONE*/
+    return `
+    <section class="container">
+            <div class="projects-grid">
+               ${listaProjects.map((p, i) => CardProject(p, weather[i])).join('')}
+            </div>
+        </section>
+    `
+}
+
