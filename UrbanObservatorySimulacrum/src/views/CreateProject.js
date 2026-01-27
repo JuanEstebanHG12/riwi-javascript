@@ -37,7 +37,7 @@ export function CreateProject() {
         <div class="form-group">
           <label for="status">Estado del proyecto</label>
           <select id="status" required>
-            <option value="active">Selecciona un estado</option>
+            <option value="">Selecciona un estado</option>
             <option value="active">Activo</option>
             <option value="pending">Pendiente</option>
             <option value="finished">Finalizado</option>
@@ -68,33 +68,18 @@ export function CreateProject() {
     `
 }
 
-/* document.addEventListener('click', (e) => {
-    if (e.target.id === 'btn-save-project') {
-      const form = e.target.closest('#createProjectForm')
-      e.preventDefault()
-        const name = form.querySelector('#name')
-        const city = form.querySelector('#city')
-        const lat = form.querySelector('#lat')
-        const lon = form.querySelector('#lon')
-        const status = form.querySelector('#status')
-        
 
-        createProject(name.value, city.value, lon.value, lat.value, status.value)
-        location.hash = "#/dashboard"
-    }
-}) */
 document.addEventListener('submit', (e) => {
-  console.log(e.target);
-  const btn = e.target.querySelector('#btn-save-project')
+  console.log('Form submitted:', e.target.id);
   if (e.target.id === 'createProjectForm') {
-    e.preventDefault()
-    const form = e.target
-    const name = form.querySelector('#name')
-    const city = form.querySelector('#city')
-    const lat = form.querySelector('#lat')
-    const lon = form.querySelector('#lon')
-    const status = form.querySelector('#status')
-    createProject(name.value, city.value, lon.value, lat.value, status.value)
+    e.preventDefault();
+    console.log('Preventing default and processing form');
+    const form = e.target;
+    const name = form.querySelector('#name');
+    const city = form.querySelector('#city');
+    const lat = form.querySelector('#lat');
+    const lon = form.querySelector('#lon');
+    const status = form.querySelector('#status');
+    createProject(name.value, city.value, lon.value, lat.value, status.value);
   }
-
-})
+});
