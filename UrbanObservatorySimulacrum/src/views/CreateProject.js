@@ -1,7 +1,7 @@
 import { createProject } from "../services/projectsServices.js"
 
 export function CreateProject() {
-    return `
+  return `
     <main class="container">
     <section class="create-project-container">
 
@@ -68,10 +68,10 @@ export function CreateProject() {
     `
 }
 
-document.addEventListener('click', (e) => {
+/* document.addEventListener('click', (e) => {
     if (e.target.id === 'btn-save-project') {
-        e.preventDefault()
-        const form = e.target.closest('#createProjectForm')
+      const form = e.target.closest('#createProjectForm')
+      e.preventDefault()
         const name = form.querySelector('#name')
         const city = form.querySelector('#city')
         const lat = form.querySelector('#lat')
@@ -82,4 +82,19 @@ document.addEventListener('click', (e) => {
         createProject(name.value, city.value, lon.value, lat.value, status.value)
         location.hash = "#/dashboard"
     }
+}) */
+document.addEventListener('submit', (e) => {
+  console.log(e.target);
+  const btn = e.target.querySelector('#btn-save-project')
+  if (e.target.id === 'createProjectForm') {
+    e.preventDefault()
+    const form = e.target
+    const name = form.querySelector('#name')
+    const city = form.querySelector('#city')
+    const lat = form.querySelector('#lat')
+    const lon = form.querySelector('#lon')
+    const status = form.querySelector('#status')
+    createProject(name.value, city.value, lon.value, lat.value, status.value)
+  }
+
 })

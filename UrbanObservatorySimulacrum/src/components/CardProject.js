@@ -4,7 +4,7 @@ import { stateProjects } from "../utils/utils.js"
 export function CardProject(project,weather) {
     return `
     <!-- Project Card  -->
-                <article class="project-card">
+                <article data-id="${project.id}" class="project-card">
                     <div class="project-header">
                         <div class="project-header-top">
                             <div class="project-title-wrapper">
