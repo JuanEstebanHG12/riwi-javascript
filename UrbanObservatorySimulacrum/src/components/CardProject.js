@@ -60,7 +60,7 @@ export function CardProject(project,weather) {
                                 </svg>
                                 <span>Actualizado hace 15 min</span>
                             </div>
-                            <a href="detail.html" class="btn btn-outline">Ver detalle</a>
+                            <a href="#/detail/${project.id}" class="btn btn-outline">Ver detalle</a>
                         </div>
                     </div>
                 </article>

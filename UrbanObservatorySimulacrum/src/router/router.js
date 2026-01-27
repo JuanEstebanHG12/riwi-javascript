@@ -1,5 +1,5 @@
 import { render } from "../core/render.js";
-import { Login, Dashboard, Detail, NotFound, CreateProject } from "../views/index.js";
+import { Login, Dashboard, DetailView, NotFound, CreateProject } from "../views/index.js";
 
 
 export async function router() {
@@ -15,14 +15,14 @@ export async function router() {
     const routes = {
         'login': Login,
         'dashboard': Dashboard,
-        'detail': Detail,
+        'detail': DetailView,
         'create-project': CreateProject,
     }
 
     const routeView = routes[route]
-
+    
     if (routeView) {
-        render(await routeView())
+        param ? render(await routeView(param)) : render(await routeView())
     }
     else {
         render(NotFound())
