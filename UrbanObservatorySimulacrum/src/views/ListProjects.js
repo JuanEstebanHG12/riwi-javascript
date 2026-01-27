@@ -1,11 +1,14 @@
 import { CardProject } from "../components/CardProject.js";
+import { Loading } from "../components/Loading.js";
+import { render } from "../core/render.js";
 import { getWeather } from "../services/meteoServices.js";
 import { getProjects } from "../services/projectsServices.js";
 
 
 export async function ListProyect(listaProjects){
+    render(Loading())
     
-
+    
     //obtener la lista en base a la lista de projectos
     const weather = await Promise.all(
         listaProjects.map(p => getWeather(p.longitude, p.latitude))

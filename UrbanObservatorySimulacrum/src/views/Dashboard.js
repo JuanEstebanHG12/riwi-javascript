@@ -5,13 +5,14 @@ import {  Loading } from "../components/Loading.js";
 let stats = null
 let status = 'all'
 export async function Dashboard(status = '') {
-    render(Loading())
+    // render(Loading())
     let listaProjects = await filterProjects(status)   
     if (listaProjects.length === 0){
         listaProjects = await getProjects()
     }
     
-
+    console.log(listaProjects);
+    
     return `
     <!-- Main Content -->
     <main>
